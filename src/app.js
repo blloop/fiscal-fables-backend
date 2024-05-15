@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-import User from './user.js';
-import Course from './course.js';
+import User from "./user.js";
+import Course from "./course.js";
 
 // Get URL to mongo deployment
 // const dotenvObj = dotenv.config()
@@ -13,16 +13,17 @@ const mongoURL = dotenv.config().parsed.DB_URL;
 // Mongoost declaration
 mongoose.set("strictQuery", false);
 
-mongoose.connect(mongoURL, {
+mongoose
+  .connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-})
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-});
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 // Express declarations
 
@@ -36,18 +37,20 @@ app.use(cors());
 // Create two sample collections
 
 const firstUser = new User({
-  name: 'Marnel'
+  name: "Marnel",
 });
 const firstCourse = new Course({
-  title: 'Biggest Banks'
-})
+  title: "Biggest Banks",
+});
 
 // Insert the article in our MongoDB database
 await firstUser.save();
 await firstCourse.save();
 
-// const anyUser = await User.findOne([]);
-// console.log(anyUser);
+const anyUser = await User.findOne({
+  name: "Marnel"
+});
+console.log(anyUser);
 
 /* Sample data values */
 
@@ -57,66 +60,70 @@ let courseData = [
     courseName: "intro to finance",
     courseImage: "image.com",
     questions: [
-      {questionsText: "What is your name?",
-      coinValue: 100,
-      correctIndex: 1,
-      answers: [
-        {
-          text: "answer1"
-        },
+      {
+        questionsText: "What is your name?",
+        coinValue: 100,
+        correctIndex: 1,
+        answers: [
+          {
+            text: "answer1",
+          },
 
-        {
-          text: "answer2"
-        },
+          {
+            text: "answer2",
+          },
 
-        {
-          text: "answer3"
-        },
+          {
+            text: "answer3",
+          },
 
-        {
-          text: "answer4"
-        }
-      ]}
-        
-    ]
-    }
+          {
+            text: "answer4",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 let userData = [
   {
     name: "bill",
-    email: "google", 
+    email: "google",
     coins: 100,
-    courses: [{
-      id: "course1"
-    }
-    ]
+    courses: [
+      {
+        id: "course1",
+      },
+    ],
   },
   {
-    name: "anupritaa", 
-    email: "yahoo", 
+    name: "anupritaa",
+    email: "yahoo",
     coins: 200,
-    courses: [{
-      id: "course1"
-    }
-    ]
-  }, 
+    courses: [
+      {
+        id: "course1",
+      },
+    ],
+  },
   {
     name: "johnny",
     email: "hotmail",
     coins: 100,
-    courses: [{
-      id: "course1"
-    }
-    ]
-  }
+    courses: [
+      {
+        id: "course1",
+      },
+    ],
+  },
 ];
 
 /* Example routes */
 
-app.get('/login', (req, res) => {
-  res.type('text');
-  res.send('Hello, World!');
+app.get("/login", (req, res) => {
+  res.type("text");
+  res.send("Hello, World!");
   // console.log(req);
 });
 
@@ -130,7 +137,7 @@ app.get("/user/:user/email/:email", (req, res) => {
 
 /**
  * loadApp()
- * Parameters: 
+ * Parameters:
  * - username(string)
  * Returns:
  * - email(string)
@@ -138,19 +145,16 @@ app.get("/user/:user/email/:email", (req, res) => {
  * - courses(array of courses)
  */
 app.get("/username/:username", (req, res) => {
-  
-
-
   // Get data from database
-  console.log(req.params.username)
+  console.log(req.params.username);
   // For example, check the table to make the user exists
-  for(let i = 0; i < userData.length; i++ ){
-    if(userData[i].name === req.params.username){
+  for (let i = 0; i < userData.length; i++) {
+    if (userData[i].name === req.params.username) {
       res.send({
         email: userData[i].email,
         coins: userData[i].coins,
-        courses: userData[i].courses
-      })
+        courses: userData[i].courses,
+      });
     }
   }
   // ... Do some computation
@@ -165,18 +169,18 @@ app.get("/username/:username", (req, res) => {
  */
 app.get("/username/:username", (req, res) => {
   // Fetch data from database
-  
+
   // Log param for debugging
-  console.log(req.params.username)
-  
+  console.log(req.params.username);
+
   // Look in data for username
   // let result = {};
   for (let i = 0; i < data.length; i++) {
     if (data[i].name === req.params.username) {
       res.send({
         email: data[i].email,
-        coins: data[i].coins
-      })
+        coins: data[i].coins,
+      });
     }
   }
 
@@ -208,8 +212,6 @@ app.get("/courses", (req, res) => {
  * Returns: TODO
  */
 app.get("/username/:username/email/:email/password/:password", (req, res) => {
-
-
   res.send(req.params);
 });
 
@@ -219,24 +221,23 @@ app.get("/username/:username/email/:email/password/:password", (req, res) => {
  * Returns: TODO
  */
 app.get("/courseID/:courseID", (req, res) => {
-
   //Fetch courses data
 
   //Log parameters
-  console.log(req.params.courseID)
+  console.log(req.params.courseID);
 
   //Look for course according to ID
-  for(let i = 0; i < courseData.length; i++){
-    if(courseData[i].courseID == req.params.courseID){
+  for (let i = 0; i < courseData.length; i++) {
+    if (courseData[i].courseID == req.params.courseID) {
       res.send({
         courseImage: courseData[i].courseImage,
-        questions: courseData[i].questions
-      })
+        questions: courseData[i].questions,
+      });
     }
   }
 
-  res.send({})
-  
+  res.send({});
+
   res.send(req.params);
 });
 
@@ -246,25 +247,23 @@ app.get("/courseID/:courseID", (req, res) => {
  * Returns: TODO
  */
 app.get("/courseID/:courseID/qNumber/:qNumber", (req, res) => {
-
   //Log parameters
-  console.log(req.params.courseID)
-  console.log(req.params.qNumber)
+  console.log(req.params.courseID);
+  console.log(req.params.qNumber);
 
-  for(let i = 0; i < courseData.length; i++){
-    if(courseData[i].questions == req.params.questions){
+  for (let i = 0; i < courseData.length; i++) {
+    if (courseData[i].questions == req.params.questions) {
       res.send({
         coinValue: courseData[i].coinValue,
-        correctIndex: courseData[i].correctIndex
-      })
+        correctIndex: courseData[i].correctIndex,
+      });
     }
   }
 
-  res.send({})
+  res.send({});
 
   res.send(req.params);
 });
-
 
 // Tells our app to listen to the given port
 app.listen(port, () => {

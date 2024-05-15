@@ -6,9 +6,21 @@ import dotenv from "dotenv";
 import User from "./user.js";
 import Course from "./course.js";
 
+// Express declarations
+
+// const express = require('express');
+// const cors = require('cors');
+
+const port = 3000;
+const app = express();
+app.use(cors());
+
 // Get URL to mongo deployment
-// const dotenvObj = dotenv.config()
-const mongoURL = dotenv.config().parsed.DB_URL;
+dotenv.config()
+const mongoURL = process.env.DB_URL;
+// const mongoURL = dotenv.config().parsed.DB_URL;
+console.log(mongoURL);
+console.log(process.env);
 
 // Mongoost declaration
 mongoose.set("strictQuery", false);
@@ -25,15 +37,6 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-// Express declarations
-
-// const express = require('express');
-// const cors = require('cors');
-
-const port = 3000;
-const app = express();
-app.use(cors());
-
 // Create two sample collections
 
 const firstUser = new User({
@@ -44,8 +47,6 @@ const firstCourse = new Course({
 });
 
 // Insert the article in our MongoDB database
-await firstUser.save();
-await firstCourse.save();
 
 const anyUser = await User.findOne({
   name: "Marnel"

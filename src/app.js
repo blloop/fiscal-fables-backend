@@ -62,19 +62,19 @@ let courseData = [
       correctIndex: 1,
       answers: [
         {
-          text: answer1
+          text: "answer1"
         },
 
         {
-          text: answer2
+          text: "answer2"
         },
 
         {
-          text: answer3
+          text: "answer3"
         },
 
         {
-          text: answer4
+          text: "answer4"
         }
       ]}
         
@@ -88,7 +88,7 @@ let userData = [
     email: "google", 
     coins: 100,
     courses: [{
-      course1
+      id: "course1"
     }
     ]
   },
@@ -97,7 +97,7 @@ let userData = [
     email: "yahoo", 
     coins: 200,
     courses: [{
-      course1
+      id: "course1"
     }
     ]
   }, 
@@ -106,7 +106,7 @@ let userData = [
     email: "hotmail",
     coins: 100,
     courses: [{
-      course1
+      id: "course1"
     }
     ]
   }

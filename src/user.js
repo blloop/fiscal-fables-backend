@@ -3,6 +3,7 @@ const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
   name: String,
+  collection: 'users',
 });
 
 const User = model("User", userSchema);
